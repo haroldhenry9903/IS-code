@@ -14,7 +14,7 @@ class Jobseeker:
 
 
 
-user_1 = User("82580","Harold","haroldhenry9903@gmail.com","harolH","pic","Good boy")
+user_1 = User("82580","Harold","haroldhenry9903@gmail.com","harolH","pic","boy")
 
 print(user_1.userID)
 print(user_1.userName)
