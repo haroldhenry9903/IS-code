@@ -122,9 +122,7 @@ class Customer(User):
         print("Customer profile updated successfully.")
 
 
-
-
-#Jobseeker Class
+#Job Class
 class Job:
     def __init__(self, jobID, jobName, description, applicationDeadline, contactDetails, salary, company, skillsRequirement):
         self.jobID = jobID
@@ -168,66 +166,7 @@ class Job:
             print(f"{applicant.name} does not meet the skills requirement for job '{self.jobName}'.")
 
 
-class User:
-    def __init__(self, userID, userName, email, password, profilepicture, biodata, contactDetails):
-        self.userID = userID
-        self.userName = userName
-        self.email = email
-        self.password = password
-        self.profilepicture = profilepicture
-        self.biodata = biodata
-        self.contactDetails = contactDetails
-        self.logged_in = False
-        self.messages = []
-
-    def login(self, entered_password):
-        if self.password == entered_password:
-            self.logged_in = True
-            print("Login successful.")
-        else:
-            print("Login failed. Incorrect password.")
-
-    def logout(self):
-        self.logged_in = False
-        print("Logged out successfully.")
-
-    def viewMessage(self, message_index):
-        if self.logged_in:
-            if 0 <= message_index < len(self.messages):
-                print("Message:", self.messages[message_index])
-            else:
-                print("Invalid message index.")
-        else:
-            print("You must be logged in to view messages.")
-
-    def composeMessage(self, recipient, message_content):
-        if self.logged_in:
-            message = f"From: {self.userName}\nTo: {recipient}\nContent: {message_content}"
-            self.messages.append(message)
-            print("Message sent successfully.")
-        else:
-            print("You must be logged in to compose messages.")
-
-    def discardMessage(self, message_index):
-        if self.logged_in:
-            if 0 <= message_index < len(self.messages):
-                del self.messages[message_index]
-                print("Message discarded successfully.")
-            else:
-                print("Invalid message index.")
-        else:
-            print("You must be logged in to discard messages.")
-
-    def updateProfile(self, new_profilepicture, new_biodata, new_contactDetails):
-        if self.logged_in:
-            self.profilepicture = new_profilepicture
-            self.biodata = new_biodata
-            self.contactDetails = new_contactDetails
-            print("Profile updated successfully.")
-        else:
-            print("You must be logged in to update your profile.")
-
-
+#Jobseeker class
 class JobSeeker(User):
     def __init__(self, userID, userName, email, password, profilepicture, biodata, contactDetails):
         super().__init__(userID, userName, email, password, profilepicture, biodata, contactDetails)
@@ -351,64 +290,6 @@ class Artisan(User):
             print(f"Image: {product['image']}")
             print()
 
-# Example usage of Artisan methods
-
-# Create an Artisan instance
-artisan = Artisan(
-    userID=401,
-    userName="CraftyArtisan",
-    email="crafty@example.com",
-    password="password123",
-    profilepicture="artisan_profile.jpg",
-    biodata="Artisan at Crafty Creations",
-    contactDetails="Contact: 987-654-3210"
-)
-
-# List a product
-artisan.listProduct(
-    productID=1,
-    productName="Handcrafted Necklace",
-    description="Beautiful handcrafted necklace with gemstones",
-    price=50.00,
-    image="necklace_image.jpg"
-)
-
-# Edit a product
-artisan.editProduct(
-    productID=1,
-    new_details={
-        'description': "Exquisite handcrafted necklace with gemstones",
-        'price': 75.00
-    }
-)
-
-# Delete a product
-artisan.deleteProduct(productID=1)
-
-# Manage products
-artisan.manageProduct()
-
-
-#Message class
-class Message:
-    def __init__(self, content, timestamp, is_read):
-        self.content = content
-        self.timestamp = timestamp
-        self.is_read = is_read
-
-    def sendMessage(self, sender, recipient):
-        message = f"From: {sender.username}\nTo: {recipient.username}\nContent: {self.content}\nTimestamp: {self.timestamp}"
-        recipient.receiveMessage(message)
-        print("Message sent successfully.")
-
-    def notifyUser(self, user):
-        if not self.is_read:
-            print(f"You have an unread message from {self.timestamp}. Content: {self.content}")
-        else:
-            print("No new notifications.")
-
-    def receiveMessage(self, message):
-        print(f"{self.username} received a message:\n{message}")
 
 
 
@@ -537,16 +418,12 @@ class Review:
 # Example usage of review class:
 review1 = Review(1, 101, 201, 4, "This is a great product!")
 review2 = Review(2, 102, 201, 5, "Excellent service!")
-
 review1.displayReview()
 review2.displayReview()
-
 review1.leaveReview(5, "Fantastic product!")
 review1.displayReview()
-
 review2.editReview(4, "Very good service!")
 review2.displayReview()
-
 review1.deleteReview()
 review1.displayReview()
 
@@ -554,18 +431,14 @@ review1.displayReview()
 # Example usage of Job Provider Class:
 job1 = Job(1, "Software Developer", "Full-time software development position", "2023-01-31", "hr@company.com", 80000, "ABC Company", ["Python", "JavaScript", "SQL"])
 job2 = Job(2, "Data Analyst", "Data analysis role", "2023-02-28", "hr@company.com", 70000, "XYZ Inc.", ["Excel", "Python", "Statistics"])
-
 job1.getJobDetails()
 job2.getJobDetails()
-
 applicant1 = Applicant("John", ["Python", "JavaScript", "SQL"])
 applicant2 = Applicant("Alice", ["Excel", "Python", "Statistics"])
-
 job1.apply(applicant1)
 job2.apply(applicant1)
 job1.apply(applicant2)
 job2.apply(applicant2)
-
 job1.closeApplication()
 job2.closeApplication()
 
@@ -573,23 +446,17 @@ job2.closeApplication()
 # Example usage for Product class:
 product1 = Product("Product 1", "Description for Product 1", 19.99, "product1.jpg")
 product2 = Product("Product 2", "Description for Product 2", 29.99, "product2.jpg")
-
 product_list = []
-
 product1.displayProduct()
 product2.displayProduct()
-
 product1.updateProduct("Updated Product 1", "Updated Description for Product 1", 24.99, "updated_product1.jpg")
 product1.displayProduct()
-
 product1.addProduct(product_list, product1)
 product1.addProduct(product_list, product2)
-
 product2.removeProduct(product_list, "Product 2")
 
 # Example usage of User Class:
 user1 = User("1", "Alice", "alice@example.com", "password123", "profile.jpg", "Bio: Alice", "Contact: 123-456-7890")
-
 user1.login("password123")
 user1.composeMessage("Bob", "Hello Bob, how are you?")
 user1.composeMessage("Charlie", "Hi Charlie, let's meet up.")
@@ -613,9 +480,7 @@ customer1.updateProfile("new_profile.jpg", "Updated bio", "Updated contact: 987-
 # Example usage Job class:
 job1 = Job(1, "Software Developer", "Full-time software development position", "2023-01-31", "hr@company.com", 80000, "ABC Company", ["Python", "JavaScript", "SQL"])
 job2 = Job(2, "Data Analyst", "Data analysis role", "2023-02-28", "hr@company.com", 70000, "XYZ Inc.", ["Excel", "Python", "Statistics"])
-
 job_seeker = JobSeeker(101, "John Doe", "john@example.com", "password123", "profile.jpg", "Bio: John", "Contact: 123-456-7890")
-
 job_seeker.searchJob("Software Developer")
 job_seeker.applyJobs(job1)
 job_seeker.applyJobs(job1)  # Applying for the same job again to test duplication handling
@@ -653,9 +518,43 @@ artisan.editProduct(
         'price': 75.00
     }
 )
+# Delete a product
+artisan.deleteProduct(productID=1)
+# Manage products
+artisan.manageProduct()
+
+
+# Example usage of Artisan methods
+# Create an Artisan instance
+artisan = Artisan(
+    userID=401,
+    userName="CraftyArtisan",
+    email="crafty@example.com",
+    password="password123",
+    profilepicture="artisan_profile.jpg",
+    biodata="Artisan at Crafty Creations",
+    contactDetails="Contact: 987-654-3210"
+)
+
+# List a product
+artisan.listProduct(
+    productID=1,
+    productName="Handcrafted Necklace",
+    description="Beautiful handcrafted necklace with gemstones",
+    price=50.00,
+    image="necklace_image.jpg"
+)
+
+# Edit a product
+artisan.editProduct(
+    productID=1,
+    new_details={
+        'description': "Exquisite handcrafted necklace with gemstones",
+        'price': 75.00
+    }
+)
 
 # Delete a product
 artisan.deleteProduct(productID=1)
-
 # Manage products
 artisan.manageProduct()
