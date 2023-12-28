@@ -1,4 +1,3 @@
-
 #class user
 class User:
     def __init__(self, userID, userName, email, password, profilepicture, biodata, contactDetails):
@@ -316,6 +315,35 @@ class Product:
                 break
         else:
             print(f"Product '{product_title}' not found in the list.")
+# Cart Class
+# Cart Class
+class Cart:
+    def __init__(self, cart_name="MyCart"):
+        self.cart_name = cart_name
+        self.items = []       # List to store Product objects
+        self.total_price = 0.0  # Total price of all items in the cart
+
+    def calculateTotalPrice(self):
+        # Calculate the total price based on the items in the cart
+        self.total_price = sum(product.price for product in self.items)
+
+    def addProductToCart(self, product):
+        self.items.append(product)
+        print(f"Product '{product.product_title}' added to the cart.")
+
+    def removeProductFromCart(self, product_title):
+        for product in self.items:
+            if product.product_title == product_title:
+                self.items.remove(product)
+                print(f"Product '{product_title}' removed from the cart.")
+                break
+        else:
+            print(f"Product '{product_title}' not found in the cart.")
+
+    def displayCart(self):
+        print(f"{self.cart_name}'s Cart Contents:")
+        for product in self.items:
+            print("- " + product.product_title)
 
 #Job Class
 class Job:
@@ -574,3 +602,40 @@ print(message2)
 
 notification1.sendNotification()
 notification2.sendNotification()
+print("________________________________________________________________________________________________")
+# Example Usage of Cart Class:
+# Create instances of Product
+product1 = Product("Laptop", "High-performance laptop", 999.99, "laptop_image.jpg")
+product2 = Product("Mouse", "Wireless mouse", 19.99, "mouse_image.jpg")
+product3 = Product("Keyboard", "Mechanical keyboard", 49.99, "keyboard_image.jpg")
+
+# Create carts with different names
+user_cart1 = Cart(cart_name="JohnsCart")
+user_cart2 = Cart(cart_name="MarysCart")
+
+# Add products to carts
+user_cart1.addProductToCart(product1)
+user_cart1.addProductToCart(product2)
+
+user_cart2.addProductToCart(product2)
+user_cart2.addProductToCart(product3)
+
+# Display cart contents
+user_cart1.displayCart()  # Output: JohnsCart's Cart Contents: - Laptop - Mouse
+
+user_cart2.displayCart()  # Output: MarysCart's Cart Contents: - Mouse - Keyboard
+
+# Remove a product from a cart
+user_cart1.removeProductFromCart("Laptop")  # Output: Product 'Laptop' removed from the cart.
+
+# Display updated cart contents
+user_cart1.displayCart()  # Output: JohnsCart's Cart Contents: - Mouse
+
+# Calculate total price for each cart
+user_cart1.calculateTotalPrice()
+user_cart2.calculateTotalPrice()
+
+# Display total price for each cart
+print(f"{user_cart1.cart_name}'s Total Price: ${user_cart1.total_price:.2f}")  # Output: JohnsCart's Total Price: $19.99
+print(f"{user_cart2.cart_name}'s Total Price: ${user_cart2.total_price:.2f}")  # Output: MarysCart's Total Price: $69.98
+
