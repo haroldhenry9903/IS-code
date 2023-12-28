@@ -1,4 +1,3 @@
-import datetime
 
 #class user
 class User:
@@ -255,27 +254,27 @@ class Artisan(User):
             print(f"Image: {product['image']}")
             print()
 
-#Message Class
+#Message and Notification Class
+from datetime import datetime
+
 class Message:
     def __init__(self, content, sender=None, recipient=None, timestamp=None):
         self.content = content
         self.sender = sender
         self.recipient = recipient
-        self.timestamp = timestamp  # You might want to use a datetime object for timestamps
+        self.timestamp = timestamp if timestamp else datetime.now()
 
-    def send(self):
-        print(f"Message sent from {self.sender} to {self.recipient}: {self.content}")
+    def __str__(self):
+        return f"{self.sender} -> {self.recipient}: {self.content}"
 
-
-#Notification Class
 class Notification:
-    def __init__(self, content, sender=None, recipient=None):
-        self.content = content
+    def __init__(self, message, sender=None, recipient=None):
+        self.message = message
         self.sender = sender
         self.recipient = recipient
 
-    def send(self):
-        print(f"Notification sent to {self.recipient}: {self.content}")
+    def sendNotification(self):
+        print(f"Notification sent to {self.recipient}: {self.message}")
 
 
 #Product Class
@@ -563,16 +562,15 @@ job_provider.editJobDetails(jobID="101", new_details=new_job_details)
 job_provider.cancelJobPosting(jobID="102")
 
 print("_______________________________________________________________________________________________")
-# Example of using the Message class
+# Example of using the Message and Notification class
 message1 = Message("Hello there!", sender="User123", recipient="User456")
-message1.send()
-
 message2 = Message("Meeting at 2 PM.", sender="User456", recipient="User123")
-message2.send()
-print("_________________________________________________________________________________")
-# Example of using the Notification class
-notification1 = Notification("You have a new message!", sender="Admin", recipient="User123")
-notification1.send()
 
-notification2 = Notification("Your application has been received.", sender="HR", recipient="JobSeeker456")
-notification2.send()
+notification1 = Notification(message1, sender="Admin", recipient="User123")
+notification2 = Notification(message2, sender="User456", recipient="User123")
+
+print(message1)
+print(message2)
+
+notification1.sendNotification()
+notification2.sendNotification()
