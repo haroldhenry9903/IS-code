@@ -122,55 +122,12 @@ class Customer(User):
         print("Customer profile updated successfully.")
 
 
-#Job Class
-class Job:
-    def __init__(self, jobID, jobName, description, applicationDeadline, contactDetails, salary, company, skillsRequirement):
-        self.jobID = jobID
-        self.jobName = jobName
-        self.description = description
-        self.applicationDeadline = applicationDeadline
-        self.contactDetails = contactDetails
-        self.salary = salary
-        self.company = company
-        self.skillsRequirement = skillsRequirement
-        self.applications = []
-
-    def getJobDetails(self):
-        print("Job ID:", self.jobID)
-        print("Job Name:", self.jobName)
-        print("Description:", self.description)
-        print("Application Deadline:", self.applicationDeadline)
-        print("Contact Details:", self.contactDetails)
-        print("Salary:", self.salary)
-        print("Company:", self.company)
-        print("Skills Requirement:", self.skillsRequirement)
-
-    def updateJobDetails(self, jobName, description, applicationDeadline, contactDetails, salary, company, skillsRequirement):
-        self.jobName = jobName
-        self.description = description
-        self.applicationDeadline = applicationDeadline
-        self.contactDetails = contactDetails
-        self.salary = salary
-        self.company = company
-        self.skillsRequirement = skillsRequirement
-
-    def closeApplication(self):
-        self.applicationDeadline = "Closed"
-        print(f"Applications for job '{self.jobName}' are now closed.")
-
-    def apply(self, applicant):
-        if applicant.checkSkills(self.skillsRequirement):
-            self.applications.append(applicant)
-            print(f"{applicant.name} applied for job '{self.jobName}'.")
-        else:
-            print(f"{applicant.name} does not meet the skills requirement for job '{self.jobName}'.")
-
-
-#Jobseeker class
+#JobSeeker Class
 class JobSeeker(User):
     def __init__(self, userID, userName, email, password, profilepicture, biodata, contactDetails):
         super().__init__(userID, userName, email, password, profilepicture, biodata, contactDetails)
         self.applied_jobs = []
+        self.skills = []
 
     def searchJob(self, job_title):
         print(f"Searching for jobs with title: {job_title}...")
@@ -191,6 +148,14 @@ class JobSeeker(User):
 
     def contactJobProvider(self, job, message):
         print(f"Contacting job provider for job '{job.jobName}' with message: '{message}'")
+
+    def checkSkillsForJob(self, required_skills_for_job):
+        if all(skill in self.skills for skill in required_skills_for_job):
+            print("JobSeeker has the required skills for the job.")
+            return True
+        else:
+            print("JobSeeker does not have all the required skills for the job.")
+            return False
 
 
 #JobProvider Class
@@ -333,7 +298,7 @@ class Product:
         else:
             print(f"Product '{product_title}' not found in the list.")
 
-#JobAvertisement class
+#Job Class
 class Job:
     def __init__(self, jobID, jobName, description, applicationDeadline, contactDetails, salary, company, skillsRequirement):
         self.jobID = jobID
@@ -369,21 +334,6 @@ class Job:
         self.applicationDeadline = "Closed"
         print(f"Applications for job '{self.jobName}' are now closed.")
 
-    def apply(self, applicant):
-        if applicant.checkSkills(self.skillsRequirement):
-            self.applications.append(applicant)
-            print(f"{applicant.name} applied for job '{self.jobName}'.")
-        else:
-            print(f"{applicant.name} does not meet the skills requirement for job '{self.jobName}'.")
-
-class Applicant:
-    def __init__(self, name, skills):
-        self.name = name
-        self.skills = skills
-
-    def checkSkills(self, required_skills):
-        return all(skill in self.skills for skill in required_skills)
-
 #Review Class
 class Review:
     def __init__(self, reviewID, authorID, subjectID, rating, comment):
@@ -415,6 +365,7 @@ class Review:
         print("Rating:", self.rating)
         print("Comment:", self.comment)
 
+print("___________________________________________________________________________")
 # Example usage of review class:
 review1 = Review(1, 101, 201, 4, "This is a great product!")
 review2 = Review(2, 102, 201, 5, "Excellent service!")
@@ -427,23 +378,17 @@ review2.displayReview()
 review1.deleteReview()
 review1.displayReview()
 
-
-# Example usage of Job Provider Class:
+print("_________________________________________________________________________________________________________________")
+# Example usage of Job Class:
 job1 = Job(1, "Software Developer", "Full-time software development position", "2023-01-31", "hr@company.com", 80000, "ABC Company", ["Python", "JavaScript", "SQL"])
 job2 = Job(2, "Data Analyst", "Data analysis role", "2023-02-28", "hr@company.com", 70000, "XYZ Inc.", ["Excel", "Python", "Statistics"])
 job1.getJobDetails()
 job2.getJobDetails()
-applicant1 = Applicant("John", ["Python", "JavaScript", "SQL"])
-applicant2 = Applicant("Alice", ["Excel", "Python", "Statistics"])
-job1.apply(applicant1)
-job2.apply(applicant1)
-job1.apply(applicant2)
-job2.apply(applicant2)
 job1.closeApplication()
 job2.closeApplication()
 
-
-# Example usage for Product class:
+print("_________________________________________________________________________________________________________________")
+#Example usage for Product class:
 product1 = Product("Product 1", "Description for Product 1", 19.99, "product1.jpg")
 product2 = Product("Product 2", "Description for Product 2", 29.99, "product2.jpg")
 product_list = []
@@ -454,7 +399,7 @@ product1.displayProduct()
 product1.addProduct(product_list, product1)
 product1.addProduct(product_list, product2)
 product2.removeProduct(product_list, "Product 2")
-
+print("_________________________________________________________________________________________________________________")
 # Example usage of User Class:
 user1 = User("1", "Alice", "alice@example.com", "password123", "profile.jpg", "Bio: Alice", "Contact: 123-456-7890")
 user1.login("password123")
@@ -464,7 +409,7 @@ user1.viewMessage(0)
 user1.discardMessage(1)
 user1.updateProfile("new_profile.jpg", "Updated bio", "Updated contact: 987-654-3210")
 user1.logout()
-
+print("_________________________________________________________________________________________________________________")
 # Example usage Customer Class:
 customer1 = Customer("s1", "Alice", "alice@example.com", "password123", "profile.jpg", "Bio: Alice", "Contact: 123-456-7890")
 customer1.browseProducts()
@@ -476,8 +421,8 @@ customer1.updatePaymentMethod("Credit Card ending in 1234")
 customer1.contactArtisan("Artisan1", "Hello, can you make a custom item for me?")
 customer1.leaveReview("Product C", 5, "Great product!")
 customer1.updateProfile("new_profile.jpg", "Updated bio", "Updated contact: 987-654-3210")
-
-# Example usage Job class:
+print("_________________________________________________________________________________________________________________")
+# Example usage Job seeker class:
 job1 = Job(1, "Software Developer", "Full-time software development position", "2023-01-31", "hr@company.com", 80000, "ABC Company", ["Python", "JavaScript", "SQL"])
 job2 = Job(2, "Data Analyst", "Data analysis role", "2023-02-28", "hr@company.com", 70000, "XYZ Inc.", ["Excel", "Python", "Statistics"])
 job_seeker = JobSeeker(101, "John Doe", "john@example.com", "password123", "profile.jpg", "Bio: John", "Contact: 123-456-7890")
@@ -487,8 +432,18 @@ job_seeker.applyJobs(job1)  # Applying for the same job again to test duplicatio
 job_seeker.viewJobDetails(job1)
 job_seeker.filterJob("Python")
 job_seeker.contactJobProvider(job2, "Is this position remote?")
+required_skills_for_job = ["Python", "Data Analysis", "Machine Learning"]
 
+# Set the skills for the JobSeeker
+job_seeker.skills = ["Python", "Data Analysis", "Machine Learning"]
 
+# Define some skills required for a job
+required_skills_for_job = ["Python", "Data Analysis", "Machine Learning"]
+
+# Check if the JobSeeker has the required skills for the job
+job_seeker.checkSkillsForJob(required_skills_for_job)
+
+print("_________________________________________________________________________________________________________________")
 # Example usage of Artisan methods
 # Create an Artisan instance
 artisan = Artisan(
@@ -523,38 +478,66 @@ artisan.deleteProduct(productID=1)
 # Manage products
 artisan.manageProduct()
 
-
-# Example usage of Artisan methods
-# Create an Artisan instance
-artisan = Artisan(
-    userID=401,
-    userName="CraftyArtisan",
-    email="crafty@example.com",
+print("_________________________________________________________________________________________________________________")
+# Create a JobProvider instance
+job_provider = JobProvider(
+    userID="1",
+    userName="CompanyABC",
+    email="companyabc@example.com",
     password="password123",
-    profilepicture="artisan_profile.jpg",
-    biodata="Artisan at Crafty Creations",
-    contactDetails="Contact: 987-654-3210"
+    profilepicture="profile.jpg",
+    biodata="Company ABC is a leading tech company.",
+    contactDetails="123-456-7890",
+    company="Company ABC",
+    joblistings=[]
 )
 
-# List a product
-artisan.listProduct(
-    productID=1,
-    productName="Handcrafted Necklace",
-    description="Beautiful handcrafted necklace with gemstones",
-    price=50.00,
-    image="necklace_image.jpg"
+# Fill job details for a job listing
+job_provider.fillJobDetails(
+    jobID="101",
+    jobName="Software Engineer",
+    description="Looking for a software engineer with Python expertise.",
+    applicationDeadline="2023-01-31",
+    salary="$80,000 - $100,000 per year",
+    skillsRequirement=["Python", "Django", "Web Development"]
 )
 
-# Edit a product
-artisan.editProduct(
-    productID=1,
-    new_details={
-        'description': "Exquisite handcrafted necklace with gemstones",
-        'price': 75.00
-    }
-)
+# Post a job listing
+job_details = {
+    'jobID': "102",
+    'jobName': "Data Analyst",
+    'description': "Data analyst position for data-driven projects.",
+    'applicationDeadline': "2023-02-15",
+    'salary': "$70,000 - $90,000 per year",
+    'skillsRequirement': ["Data Analysis", "SQL", "Statistics"]
+}
+job_provider.postJob(job_details)
 
-# Delete a product
-artisan.deleteProduct(productID=1)
-# Manage products
-artisan.manageProduct()
+# Review an applicant's application for a job listing
+applicant = User(
+    userID="2",
+    userName="JohnDoe",
+    email="johndoe@example.com",
+    password="applicantpass",
+    profilepicture="applicant.jpg",
+    biodata="Experienced software engineer.",
+    contactDetails="987-654-3210"
+)
+job_provider.reviewApplication(jobID="101", applicant=applicant)
+
+# Contact an applicant
+job_provider.contactApplicant(applicant, "You have been shortlisted for the Software Engineer position.")
+
+# Edit job details
+new_job_details = {
+    'jobID': "101",
+    'jobName': "Senior Software Engineer",
+    'description': "Looking for a senior software engineer with 5+ years of experience.",
+    'applicationDeadline': "2023-02-28",
+    'salary': "$90,000 - $120,000 per year",
+    'skillsRequirement': ["Python", "Django", "Web Development", "Leadership"]
+}
+job_provider.editJobDetails(jobID="101", new_details=new_job_details)
+
+# Cancel a job posting
+job_provider.cancelJobPosting(jobID="102")
