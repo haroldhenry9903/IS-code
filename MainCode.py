@@ -503,7 +503,7 @@ artisan = Artisan(
     contactDetails="Contact: 987-654-3210"
 )
 
-# List a product
+# List a product1
 artisan.listProduct(
     productID=1,
     productName="Handcrafted Necklace",
@@ -512,12 +512,30 @@ artisan.listProduct(
     image="necklace_image.jpg"
 )
 
-# Edit a product
+# List a product2
+artisan.listProduct(
+    productID=2,
+    productName="Handcrafted Ring",
+    description="Beautiful handcrafted ring with gemstones",
+    price=30.00,
+    image="ring_image.jpg"
+)
+
+# Edit a product1
 artisan.editProduct(
     productID=1,
     new_details={
         'description': "Exquisite handcrafted necklace with gemstones",
         'price': 75.00
+    }
+)
+
+# Edit a product2
+artisan.editProduct(
+    productID=3,
+    new_details={
+        'description': "Exquisite handcrafted ring with gemstones",
+        'price': 95.00
     }
 )
 # Delete a product
