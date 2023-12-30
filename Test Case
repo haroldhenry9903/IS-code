@@ -40,10 +40,11 @@ artisan.editProduct(
     }
 )
 
-# Edit a product2
+# Edit a product 3(a non-existing product)
 artisan.editProduct(
     productID=3,
     new_details={
+        'productName':"Super Ring",
         'description': "Exquisite handcrafted ring with gemstones",
         'price': 95.00
     }
