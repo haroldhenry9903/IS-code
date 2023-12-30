@@ -1,1 +1,72 @@
+from MAINCODE import User,Customer,JobSeeker,JobProvider,Artisan,Product,Message,Cart,Notification,Review,Job
+
+#Test Case For Edit Product(Artisan Class)
+# Create an Artisan instance
+artisan = Artisan(
+    userID=401,
+    userName="CraftyArtisan",
+    email="crafty@example.com",
+    password="password123",
+    profilepicture="artisan_profile.jpg",
+    biodata="Artisan at Crafty Creations",
+    contactDetails="Contact: 987-654-3210"
+)
+
+# List a product1
+artisan.listProduct(
+    productID=1,
+    productName="Handcrafted Necklace",
+    description="Beautiful handcrafted necklace with gemstones",
+    price=50.00,
+    image="necklace_image.jpg"
+)
+
+# List a product2
+artisan.listProduct(
+    productID=2,
+    productName="Handcrafted Ring",
+    description="Beautiful handcrafted ring with gemstones",
+    price=30.00,
+    image="ring_image.jpg"
+)
+
+# Edit a product1
+artisan.editProduct(
+    productID=1,
+    new_details={
+        'productName': "Unimas Necklace",
+        'description': "Exquisite handcrafted necklace with gemstones",
+        'price': 75.00
+    }
+)
+
+# Edit a product2
+artisan.editProduct(
+    productID=3,
+    new_details={
+        'description': "Exquisite handcrafted ring with gemstones",
+        'price': 95.00
+    }
+)
+# Delete a product with id 1
+artisan.deleteProduct(productID=1)
+
+# Delete a product with id 3
+artisan.deleteProduct(productID=3)
+# Manage products
+artisan.manageProduct()
+
+
+
+print("________________________________________________________________________________________________________________________")
+#Test Case For Search Job(Job Seeker Class)
+#Create Job
+job1 = Job(1, "Software Developer", "Full-time software development position", "2023-01-31", "hr@company.com", 80000, "ABC Company", ["Python", "JavaScript", "SQL"])
+job2 = Job(2, "Data Analyst", "Data analysis role", "2023-02-28", "hr@company.com", 70000, "XYZ Inc.", ["Excel", "Python", "Statistics"])
+#Create Job Seeker
+job_seeker = JobSeeker(101, "John Doe", "john@example.com", "password123", "profile.jpg", "Bio: John", "Contact: 123-456-7890")
+#Jobseeker search for job with keywords "Police"
+job_seeker.searchJob("Police")
+#Jobseeker search for job with keywords "Software"
+job_seeker.searchJob("software")
 
