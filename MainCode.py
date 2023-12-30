@@ -130,6 +130,18 @@ class JobSeeker(User):
     def searchJob(self, job_title):
         print(f"Searching for jobs with title: {job_title}...")
 
+        # Assuming there's a list of jobs available somewhere
+        available_jobs = ["Software Engineer", "Data Analyst", "Project Manager", "Graphic Designer"]
+
+        matching_jobs = [job for job in available_jobs if job_title.lower() in job.lower()]
+
+        if matching_jobs:
+            print("Available jobs matching your search:")
+            for job in matching_jobs:
+                print(f"- {job}")
+        else:
+            print("No jobs found with the specified title.")
+
     def applyJobs(self, job):
         if job not in self.applied_jobs:
             self.applied_jobs.append(job)
